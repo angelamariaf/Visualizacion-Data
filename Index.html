@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Visualization</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Data from Google Sheets</h1>
+  <table id="data-table">
+    <thead>
+      <tr id="header-row"></tr>
+    </thead>
+    <tbody id="data-rows"></tbody>
+  </table>
+
+  <script>
+    const apiUrl = 'https://script.googleusercontent.com/a/macros/unicesmag.edu.co/echo?user_content_key=xOqUm6Uc5b8QcuKG0lItu0PWB3SLRpI4MOFYtGpGMM0e9iRVSOLQtfXRqx8lzmog4l-haxDPIB5jhsvuxOmJZthBjSrDiZPrOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKB0AwfxgyOyp9iEP_BjCyilnUdkbdjP85m94riLGjTBVF6HYaMJz-yL7CPVGNyy7VsO3gkPaIN2Ns5-lJpSAW1A4qI7jQ6Bucz7v449OXKY_deL5UjmU_4q577wpOIlMh8YZpTak_o22Q&lib=MM4TINJV6u3qG0xDE2nOyxDodCCOOXBtM'; // Reemplaza con la URL de tu API desplegada
+
+    async function fetchData() {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      return data;
+    }
+
+    function populateTable(data) {
+      const headerRow = document.getElementById('header-row');
+      const dataRows = document.getElementById('data-rows');
+
+      // Populate headers
+      const headers = Object.keys(data[0]);
+      headers.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = header;
+        headerRow.appendChild(th);
+      });
+
+      // Populate rows
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        headers.forEach(header => {
+          const td = document.createElement('td');
+          td.textContent = row[header];
+          tr.appendChild(td);
+        });
+        dataRows.appendChild(tr);
+      });
+    }
+
+    fetchData().then(data => populateTable(data));
+  </script>
+</body>
+</html>
