@@ -28,7 +28,7 @@
   </table>
 
   <script>
-    const apiUrl = 'https://script.googleusercontent.com/a/macros/unicesmag.edu.co/echo?user_content_key=xOqUm6Uc5b8QcuKG0lItu0PWB3SLRpI4MOFYtGpGMM0e9iRVSOLQtfXRqx8lzmog4l-haxDPIB5jhsvuxOmJZthBjSrDiZPrOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKB0AwfxgyOyp9iEP_BjCyilnUdkbdjP85m94riLGjTBVF6HYaMJz-yL7CPVGNyy7VsO3gkPaIN2Ns5-lJpSAW1A4qI7jQ6Bucz7v449OXKY_deL5UjmU_4q577wpOIlMh8YZpTak_o22Q&lib=MM4TINJV6u3qG0xDE2nOyxDodCCOOXBtM'; // Reemplaza con la URL de tu API desplegada
+    const apiUrl = 'https://script.googleusercontent.com/a/macros/unicesmag.edu.co/echo?user_content_key=NvsNP0oigKP01gMDHySLgjxUGtQ8wF9bzBJLwHz-j2yFjXybz7Sh0HkxzHjVd0yTWXuwc1RzDLUBcTE3Ux2c_F9Wdm9S6uYDOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMi80zadyHLKB0AwfxgyOyp9iEP_BjCyilnUdkbdjP85m94riLGjTBVF6HYaMJz-yL7CPVGNyy7VsO3gkPaIN2Ns5-lJpSAW1A4qI7jQ6Bucz7v449OXKY_deL5UjmU_4q577wpOIlMh8YZpTak_o22Q&lib=MM4TINJV6u3qG0xDE2nOyxDodCCOOXBtM'; // Reemplaza con la URL exacta de tu API desplegada
 
     async function fetchData() {
       const response = await fetch(apiUrl);
@@ -60,7 +60,7 @@
       });
     }
 
-    fetchData().then(data => populateTable(data));
+    fetchData().then(data => populateTable(data)).catch(error => console.error('Error fetching data:', error));
   </script>
 </body>
 </html>
