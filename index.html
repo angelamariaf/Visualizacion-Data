@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Data Visualization</title>
+  <title>Datos de Hojas de cálculo de Google</title>
   <style>
     table {
       width: 100%;
@@ -19,7 +19,7 @@
   </style>
 </head>
 <body>
-  <h1>Data from Google Sheets</h1>
+  <h1>Datos de Hojas de cálculo de Google</h1>
   <table id="data-table">
     <thead>
       <tr id="header-row"></tr>
@@ -31,14 +31,36 @@
     const apiUrl = 'https://script.google.com/macros/s/AKfycbzbCaV1CkbTZeavy8pFZqfSOjdKt1gPCzYQT1d8bKF83wzl9orQPTlFx978wyBizdAX/exec'; // Reemplaza con la URL exacta de tu API desplegada
 
     async function fetchData() {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      return data;
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        return [];
+      }
     }
 
     function populateTable(data) {
       const headerRow = document.getElementById('header-row');
       const dataRows = document.getElementById('data-rows');
+
+      // Clear existing content
+      headerRow.innerHTML = '';
+      dataRows.innerHTML = '';
+
+      if (data.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 5; // Ajusta esto según el número de columnas
+        td.textContent = 'No data available';
+        tr.appendChild(td);
+        dataRows.appendChild(tr);
+        return;
+      }
 
       // Populate headers
       const headers = Object.keys(data[0]);
@@ -60,7 +82,7 @@
       });
     }
 
-    fetchData().then(data => populateTable(data)).catch(error => console.error('Error fetching data:', error));
+    fetchData().then(data => populateTable(data)).catch(error => console.error('Error populating table:', error));
   </script>
 </body>
 </html>
